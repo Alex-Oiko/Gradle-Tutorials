@@ -1,0 +1,69 @@
+task hello<<{//typical hello world
+	println 'Hello World!'
+
+}
+//-------------------------------------------------------------------------------------
+task upper<<{//ooh looksies i can write tehz codez
+	String aString = "world"
+	println "hello"+aString
+	println "hello"+aString.toUpperCase()
+
+}
+
+//------------------------------------------------------------------------------------
+task count<<{//teach me how to doogie
+	23.times{print "$it "}
+}
+
+//------------------------------------------------------------------------------------
+task intro(dependsOn: hello)<<{//depends
+	println "I have to depend on others. I suck..."
+}
+
+//------------------------------------------------------------------------------------
+task taskX(dependsOn: 'tasxY')<<{//depends before declaration
+	println "World"
+}
+
+task tasxY<<{
+	print "Hello "
+}
+
+//------------------------------------------------------------------------------------
+4.times {counter->
+	 task "task$counter"<<{
+		println "You are executing task $counter"
+	 }
+}
+
+task0.dependsOn task2,task3//depends on without braces..but in a repeatable function
+
+
+//------------------------------------------------------------------------------------
+task helloAlex<<{//methods of the task basically
+	println "My name is Alex"
+}
+
+helloAlex <<{//In this context '<<' is doLast...the first doLast is executed first
+	println "Alex Oiko Bond"
+}
+
+helloAlex.doLast{
+	println "Alex Oiko"
+}
+
+helloAlex.doFirst{//same with doLast is for doFirst too
+	println "What is your name?"
+}
+
+//------------------------------------------------------------------------------------
+
+task myTask{//you MUST not include doLast...this is just declaring after all
+	ext.thisProperty="Bananas"
+}
+
+task printOtherTasksProperty<<{
+	println myTask.thisProperty
+}
+
+
